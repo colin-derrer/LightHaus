@@ -1,12 +1,7 @@
-import ProfileItem from "@/components/ClientListItem";
-import TextDivider from "@/components/DividerBar";
 import DividerBar from "@/components/DividerBar";
-import BreakpointMargin from "@/components/layout/BreakpointMargin";
 import PageShell from "@/components/layout/PageShell";
 import { Button } from "@/components/ui/button";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { clientList } from "@/demo/data";
 import SearchForm from "./SearchForm";
 
 export default function SearchPage() {

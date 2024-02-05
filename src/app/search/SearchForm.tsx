@@ -1,19 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
 import {
   Form,
   FormControl,
@@ -23,93 +9,150 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Slider } from "@/components/ui/slider";
+import { DoubleSlider } from "@/components/ui/double-slider";
 
-type LabelFormPair = {
-  label: string;
-  value: string;
-};
+type FormIdToggle = Readonly<{
+  id: string;
+  [key: string]: any;
+}>;
 
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
+function isChecked<T extends FormIdToggle>(
+  value: string,
+  checkedValues: T[] | undefined
+): boolean {
+  if (!checkedValues) return false;
+  return checkedValues.some((v) => v.id === value);
+}
+
+function getAllCheckedValues<T extends FormIdToggle>(
+  checkedValues: T[],
+  allValues: Readonly<T[]> | undefined
+): T[] {
+  if (!allValues) return [];
+  return allValues.filter((value) => isChecked(value.id, checkedValues));
+}
+
+const vehicles = [
+  {
+    id: "a",
+    year: "2022",
+    model: "A3",
+  },
+  {
+    id: "b",
+    year: "2023",
+    model: "A4",
+  },
+  {
+    id: "d",
+    year: "2025",
+    model: "A6",
+  },
+  {
+    id: "e",
+    year: "2021",
+    model: "A7",
+  },
 ] as const;
 
-const languagesEnum = z.enum([
-  "en",
-  "fr",
-  "de",
-  "es",
-  "pt",
-  "ru",
-  "ja",
-  "ko",
-  "zh",
-] as const);
+const dealerships = [
+  {
+    value: "location1",
+    label: "Dealership 1",
+  },
+  {
+    value: "location2",
+    label: "Dealership 2",
+  },
+  {
+    value: "location3",
+    label: "Dealership 3",
+  },
+] as const;
 
-function getCheckedLanguages(
-  languageValues: (typeof languages)[number]["value"][],
-  allLanguages: typeof languages
-) {
-  return allLanguages
-    .filter((language) => languageValues.includes(language.value))
-    .map((language) => language.label);
-}
+type DealershipValues = (typeof dealerships)[number]["value"];
 
-function isCheckedLanguage(
-  languageToTest: (typeof languages)[number]["value"],
-  checkedLanguages: (typeof languages)[number]["value"][]
-) {
-  return checkedLanguages.includes(languageToTest);
-}
+const dealershipEnum: [DealershipValues, ...DealershipValues[]] = [
+  dealerships[0].value,
+  // And then merge in the remaining values from `properties`
+  ...dealerships.slice(1).map((p) => p.value),
+];
 
 const FormSchema = z.object({
-  languages: languagesEnum.array(),
-}) satisfies z.ZodType<{ languages: (typeof languages)[number]["value"][] }>;
+  carTypes: z
+    .object({
+      id: z.string(),
+      year: z.string(),
+      model: z.string(),
+    })
+    .array() as z.ZodType<(typeof vehicles)[number][]>,
+  mileage: z
+    .object({
+      minimum: z.number(),
+      maximum: z.number(),
+    })
+    .optional(),
+  yearRange: z
+    .object({
+      minimum: z.number(),
+      maximum: z.number(),
+    })
+    .optional(),
+  priceRange: z
+    .object({
+      minimum: z.number(),
+      maximum: z.number(),
+    })
+    .optional(),
+  condition: z.enum(["new", "used"]).optional(),
+  dealershipLocations: z.enum(dealershipEnum).array().optional(),
+  drive: z.enum(["FWD", "RWD", "AWD"]).array().optional(),
+  colors: z.string().array().optional(),
+});
 
 export default function SearchForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      languages: [],
+      dealershipLocations: [],
+      carTypes: [],
+      mileage: { minimum: 0, maximum: 50000 },
     },
   });
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
-
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit((data) => console.log(data))}
         className="grid grid-cols-4 gap-x-4 gap-y-6"
       >
         <FormField
           control={form.control}
-          name="languages"
+          name="carTypes"
           render={({ field }) => (
-            <FormItem className="flex flex-col col-span-2">
-              <FormLabel>Language</FormLabel>
+            <FormItem className="flex flex-col col-span-full">
+              <FormLabel className="text-sm text-muted-foreground font-semibold">
+                Vehicle Models
+              </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -122,67 +165,131 @@ export default function SearchForm() {
                     >
                       <p className="truncate">
                         {field.value.length > 0
-                          ? getCheckedLanguages(field.value, languages).join(
-                              ", "
-                            )
-                          : "Select language"}
+                          ? getAllCheckedValues(field.value, vehicles)
+                              .map((v) => v.year + " " + v.model)
+                              .join(", ")
+                          : "Select vehicle"}
                       </p>
                       <ChevronsUpDown className="size-4 shrink-0" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-72 p-0">
                   <Command>
-                    <CommandInput placeholder="Search language..." />
-                    <CommandEmpty>No language found.</CommandEmpty>
+                    <CommandInput placeholder="Search vehicles..." />
+                    <CommandEmpty>No vehicle found.</CommandEmpty>
                     <CommandGroup>
-                      {languages.map((language) => (
+                      {vehicles.map((vehicle) => (
                         <CommandItem
-                          value={language.label}
-                          key={language.value}
-                          className={`flex items-center gap-1 w-full  cursor-pointer`}
+                          value={vehicle.id}
+                          key={vehicle.id}
+                          className={`flex items-center gap-1 w-full cursor-pointer`}
                           onSelect={() => {
                             form.setValue(
-                              "languages",
-                              isCheckedLanguage(language.value, field.value)
-                                ? field.value.filter(
-                                    (l) => l !== language.value
-                                  )
-                                : [...field.value, language.value]
+                              "carTypes",
+                              isChecked(vehicle.id, field.value)
+                                ? field.value.filter((v) => v.id !== vehicle.id)
+                                : [...field.value, vehicle]
                             );
-                            // form.setValue(
-                            //   "languages",
-                            //   field.value.includes(language.value)
-                            //     ? field.value.filter(
-                            //         (l) => l !== language.value
-                            //       )
-                            //     : [...field.value, language.value]
-                            // );
                           }}
                         >
                           <Check
                             className={cn(
                               "size-4",
-                              isCheckedLanguage(language.value, field.value)
-                                ? "text-primary"
-                                : "opacity-0"
+                              isChecked(vehicle.id, field.value)
+                                ? "stroke-primary"
+                                : "text-muted-foreground"
                             )}
                           />
-                          {language.label}
+                          <p className="">
+                            {vehicle.year + " " + vehicle.model}
+                          </p>
                         </CommandItem>
                       ))}
                     </CommandGroup>
                   </Command>
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                This is the language that will be used in the dashboard.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="col-span-2">
+        <FormField
+          control={form.control}
+          name="dealershipLocations"
+          render={() => (
+            <FormItem className="col-span-2">
+              <FormLabel className="text-sm text-muted-foreground font-semibold">
+                Locations
+              </FormLabel>
+              {dealerships.map((dealership) => (
+                <FormField
+                  key={dealership.value}
+                  control={form.control}
+                  name="dealershipLocations"
+                  render={({ field }) => {
+                    return (
+                      <FormItem
+                        key={dealership.value}
+                        className="flex flex-row items-start space-x-3 space-y-0"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(dealership.value)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([
+                                    ...field.value!,
+                                    dealership.value,
+                                  ])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value) => value !== dealership.value
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          {dealership.label}
+                        </FormLabel>
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="mileage"
+          render={({ field }) => (
+            <FormItem className="col-span-full flex flex-col gap-2">
+              <FormLabel className="text-sm text-muted-foreground font-semibold">
+                Mileage
+              </FormLabel>
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <p>Minimum: 0</p>
+                <p>Maximum: 50,000</p>
+              </div>
+              <FormControl>
+                <DoubleSlider
+                  onValueCommit={(e) => {
+                    console.log(e);
+                  }}
+                  step={1000}
+                  defaultValue={[0, 50000]}
+                  max={50000}
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="col-span-1">
           Submit
         </Button>
       </form>
