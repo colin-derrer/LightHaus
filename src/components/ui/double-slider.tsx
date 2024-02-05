@@ -9,7 +9,7 @@ import { Label } from "./label";
 
 const CustomDoubleSlider = forwardRef(function CustomDoubleSlider(
   props: React.ComponentPropsWithoutRef<typeof SliderPrimitive.Thumb> & {
-    val: number | undefined;
+    val: number;
   },
   forwardedRef
 ) {
@@ -37,9 +37,11 @@ export const DoubleSlider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
 >(function Asdf({ className, ...props }, ref) {
-  const [value, setValue] = React.useState(
-    props.value || props.defaultValue || [0, 100]
-  );
+  const [value, setValue] = React.useState(props.value || [0, 100]);
+
+  React.useEffect(() => {
+    setValue(props.value || [0, 100]);
+  }, [props.value]);
 
   return (
     <SliderPrimitive.Root

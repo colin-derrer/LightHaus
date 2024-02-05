@@ -276,11 +276,18 @@ export default function SearchForm() {
               </div>
               <FormControl>
                 <DoubleSlider
-                  onValueCommit={(e) => {
-                    console.log(e);
+                  onValueChange={(e) => {
+                    form.setValue("mileage", {
+                      minimum: e[0],
+                      maximum: e[1],
+                    });
                   }}
                   step={1000}
                   defaultValue={[0, 50000]}
+                  value={[
+                    field.value?.minimum || 1,
+                    field.value?.maximum || 50000,
+                  ]}
                   max={50000}
                 />
               </FormControl>
