@@ -1,113 +1,191 @@
-import Image from "next/image";
+import CalendarCard from "@/components/CalendarCard";
+import GridTile from "@/components/GridTile";
+import PageMargin from "@/components/layout/BreakpointMargin";
+import TextDivider from "@/components/DividerBar";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import {
+  CalendarPlus,
+  Car,
+  PackageOpen,
+  SatelliteDish,
+  Wallet,
+} from "lucide-react";
+
+//grid-rows-[200px_minmax(900px,_1fr)_100px]
 
 export default function Home() {
+  const tiles = [];
+  for (let i = 0; i < 16; i++) {
+    tiles.push(i);
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <PageMargin className="border border-border grow p-4 grid grid-cols-12 auto-rows-min gap-x-4 rounded-lg">
+      <Card className="col-span-4 justify-between aspect-square bg-transparent flex flex-col border-none">
+        <TextDivider className="grow-0">
+          <div className="">Frogamus’s Dashboard</div>
+        </TextDivider>
+        <div className="flex flex-col">
+          <p className="text-muted-foreground text-xl font-semibold">
+            January 26th
+          </p>
+          <p className="text-5xl font-semibold">10:21 AM</p>
         </div>
-      </div>
+        <div className="grid grid-cols-2 gap-2 text-center text-lg font-semibold">
+          <Card className="h-32 col-span-2 bg-gray-300 p-8 flex justify-between items-center text-primary-foreground">
+            <p>36% | $84,600</p>
+            <p>Monthly sales target $235,000</p>
+          </Card>
+          <Card className="h-32 col-span-2 bg-stone-700 p-8 flex justify-between items-center">
+            <p>96.4%</p>
+            <p>Customer satisfaction score</p>
+          </Card>
+          <Card className="h-32 bg-blue-600 flex justify-center items-center p-4">
+            This month you’ve sold exterior detailing packages
+          </Card>
+          <Card className="h-32 bg-black p-4 flex justify-center items-center">
+            6 months in a row of hitting your goals
+          </Card>
+        </div>
+      </Card>
+      <Card className="border-none bg-transparent col-span-4 grid grid-cols-4 grid-rows-4 gap-4 aspect-square">
+        <GridTile className="bg-tempBlue text-tempBlue-foreground">
+          <SatelliteDish className="size-10" />
+          <div className="flex flex-col text-center pt-4 font-semibold">
+            <p className="">4 New</p>
+            <p className="">Outreach</p>
+          </div>
+        </GridTile>
+        <GridTile>
+          <PackageOpen className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">4</p>
+            <p className="font-semibold whitespace-nowrap">Package Updates</p>
+          </div>
+        </GridTile>
+        <GridTile className="bg-primary text-primary-foreground">
+          <Car className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">Recent Vehicle</p>
+            <p className="font-semibold">4 Arrivals</p>
+          </div>
+        </GridTile>
+        <GridTile className="">
+          <Wallet className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">1</p>
+            <p className="font-semibold">Open Deal</p>
+          </div>
+        </GridTile>
+        <div className="col-span-1 bg-transparent" />
+        <GridTile className="bg-primary text-primary-foreground">
+          <Wallet className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">1</p>
+            <p className="font-semibold">Open Deal</p>
+          </div>
+        </GridTile>
+        <div className="col-span-1 bg-transparent" />
+        <GridTile className="bg-primary text-primary-foreground">
+          <CalendarPlus className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">View Showroom Visit Log</p>
+          </div>
+        </GridTile>
+        <GridTile className=" col-span-3 row-span-2 aspect-auto flex flex-col p-2 gap-4">
+          <p className="mt-4">New Vehicles This Week</p>
+          <ScrollArea className="h-full w-full whitespace-nowrap ">
+            <div className="flex grow  h-full w-max gap-2">
+              <Card className="h-52 min-w-48">hi</Card>
+              <Card className="h-52 min-w-48">hi</Card>
+              <Card className="h-52 min-w-48">hi</Card>
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </GridTile>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        <GridTile className="bg-stone-300 text-primary-foreground">
+          <CalendarPlus className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">View Showroom Visit Log</p>
+          </div>
+        </GridTile>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <GridTile className="bg-primary text-primary-foreground">
+          <CalendarPlus className="size-10" />
+          <div className="flex flex-col text-center pt-4">
+            <p className="font-semibold">View Showroom Visit Log</p>
+          </div>
+        </GridTile>
+      </Card>
+      <Card className="col-span-4 aspect-square">
+        <CardHeader className="flex flex-row justify-between gap-2 items-center space-y-0">
+          <TextDivider className="grow">
+            <div className="">Memo</div>
+          </TextDivider>
+          <div className="text-muted-foreground underline font-semibold">
+            Modify an entry
+          </div>
+        </CardHeader>
+        <CardContent>
+          <ul className="flex flex-col gap-2">
+            <li className="flex justify-between gap-1 before:content-['*'] before:ml-0.5  ">
+              <p className="grow text-sm">
+                Follow up with Colby Llama about Koenigsegg Regera maintanence
+                history Follow up with Colby Llama about Koenigsegg Regera
+                maintanence history
+              </p>
+              <div className="flex flex-shrink flex-col">
+                <p className="text-sm whitespace-nowrap">10:13 AM, Jan 29th</p>
+                <p className="text-xs text-muted-foreground whitespace-nowrap">
+                  autodelete in 36 hours
+                </p>
+              </div>
+            </li>
+            <li className="flex justify-between gap-1 before:content-['*'] before:ml-0.5  ">
+              <p className="grow text-sm">
+                Follow up with Colby Llama about Koenigsegg Regera maintanence
+                history Follow up with Colby Llama about Koenigsegg Regera
+                maintanence history
+              </p>
+              <div className="flex flex-shrink flex-col">
+                <p className="text-sm whitespace-nowrap">10:13 AM, Jan 29th</p>
+                <p className="text-xs text-muted-foreground whitespace-nowrap">
+                  autodelete in 36 hours
+                </p>
+              </div>
+            </li>
+            <li className="flex justify-between gap-1 before:content-['*'] before:ml-0.5  ">
+              <p className="grow text-sm">
+                Follow up with Colby Llama about Koenigsegg Regera maintanence
+                history Follow up with Colby Llama about Koenigsegg Regera
+                maintanence history
+              </p>
+              <div className="flex flex-shrink flex-col">
+                <p className="text-sm whitespace-nowrap">10:13 AM, Jan 29th</p>
+                <p className="text-xs text-muted-foreground whitespace-nowrap">
+                  autodelete in 36 hours
+                </p>
+              </div>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+      <Card className="col-span-full flex flex-col gap-2 pt-6 bg-transparent border-transparent">
+        <TextDivider>
+          <div>Your week</div>
+        </TextDivider>
+        <ScrollArea className="h-full w-full whitespace-nowrap">
+          <div className="flex h-full w-max gap-2 pb-4">
+            {tiles.map((tile) => (
+              <CalendarCard key={tile} />
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </Card>
+    </PageMargin>
   );
 }
