@@ -24,7 +24,7 @@ export default function DashboardTile({
         className
       )}
     >
-      {Icon && <Icon className="w-10 h-10" />}
+      {Icon && <Icon className="size-8" />}
       {children}
     </div>
   );

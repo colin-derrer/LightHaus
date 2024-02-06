@@ -108,7 +108,7 @@ export default function OutreachPage() {
           </div>
         </div>
         <div className="flex">
-          <Card className="m-2 p-4 max-w-[30%] flex flex-col gap-2">
+          <Card className="m-2 p-4 w-[450px] flex flex-col gap-2">
             <div className="flex justify-between">
               <p className="text-primary text-sm">
                 Last contacted 3 hours ago via a phone call

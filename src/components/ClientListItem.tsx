@@ -1,6 +1,6 @@
 import { formatAddedCause, formatAddedSource } from "@/lib/formatters/client";
 import { cn } from "@/lib/utils";
-import { ClientData } from "@/types";
+import { ClientData } from "@/lib/types";
 import { Sparkles } from "lucide-react";
 import ListItem from "./lists/ListItem";
 
@@ -16,7 +16,7 @@ export default function ProfileItem({
   isActive,
 }: ProfileItemProps) {
   return (
-    <ListItem className={className} isActive={isActive}>
+    <ListItem className={className} active={isActive}>
       <div className="flex flex-col justify-between">
         <p className="font-semibold text-base">{client.name}</p>
         <p className="text-sm opacity-80">

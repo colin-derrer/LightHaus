@@ -1,11 +1,14 @@
-import { ClientData } from "@/types";
+import { CarListItemProps } from "@/components/CarListItem";
+import { ClientData } from "@/lib/types";
 
 export const clientList: ClientData[] = [
   {
     id: "1",
     name: "John Doe",
     addedSource: "dealer",
-    addedCause: "leaseExpiring",
+    addedCause: ["leaseExpiring"],
+    autogenDescription:
+      "John Doe is a client who is looking for a new car because his lease is expiring.",
     events: [
       {
         type: "phone_call",
@@ -26,7 +29,9 @@ export const clientList: ClientData[] = [
     id: "2",
     name: "Jane Doe",
     addedSource: "api",
-    addedCause: "newCar",
+    addedCause: ["newCar"],
+    autogenDescription:
+      "Jane Doe is a client who is looking for a new car because she wants to get a new car.",
     events: [
       {
         type: "email",
@@ -41,3 +46,126 @@ export const clientList: ClientData[] = [
     updatedAt: "2020-01-01T12:00:00Z",
   },
 ];
+
+export const vehiclesList = [
+  {
+    id: "1",
+    name: "Acura NSX",
+    price: 50000,
+    mileage: 3000,
+    added: "Today",
+    location: "Dealership 1",
+  },
+  {
+    id: "2",
+    name: "Audi R8",
+    price: 60000,
+    mileage: 4000,
+    added: "Today",
+    location: "Dealership 2",
+  },
+  {
+    id: "3",
+    name: "BMW M3",
+    price: 70000,
+    mileage: 5000,
+    added: "Today",
+    location: "Dealership 3",
+  },
+  {
+    id: "4",
+    name: "Chevrolet Corvette",
+    price: 80000,
+    mileage: 6000,
+    added: "Today",
+    location: "Dealership 4",
+  },
+  {
+    id: "5",
+    name: "Dodge Viper",
+    price: 90000,
+    mileage: 7000,
+    added: "Today",
+    location: "Dealership 5",
+  },
+  {
+    id: "6",
+    name: "Ferrari 488",
+    price: 100000,
+    mileage: 8000,
+    added: "Today",
+    location: "Dealership 6",
+  },
+  {
+    id: "7",
+    name: "Ford Mustang",
+    price: 110000,
+    mileage: 9000,
+    added: "Today",
+    location: "Dealership 7",
+  },
+  {
+    id: "8",
+    name: "Honda Civic",
+    price: 120000,
+    mileage: 10000,
+    added: "Today",
+    location: "Dealership 8",
+  },
+  {
+    id: "9",
+    name: "Jaguar F-Type",
+    price: 130000,
+    mileage: 11000,
+    added: "Today",
+    location: "Dealership 9",
+  },
+  {
+    id: "10",
+    name: "Lamborghini Huracan",
+    price: 140000,
+    mileage: 12000,
+    added: "Today",
+    location: "Dealership 10",
+  },
+  {
+    id: "11",
+    name: "Ferrari 488",
+    price: 100000,
+    mileage: 8000,
+    added: "Today",
+    location: "Dealership 6",
+  },
+  {
+    id: "12",
+    name: "Ford Mustang",
+    price: 110000,
+    mileage: 9000,
+    added: "Today",
+    location: "Dealership 7",
+  },
+  {
+    id: "13",
+    name: "Honda Civic",
+    price: 120000,
+    mileage: 10000,
+    added: "Today",
+    location: "Dealership 8",
+  },
+  {
+    id: "14",
+    name: "Jaguar F-Type",
+    price: 130000,
+    mileage: 11000,
+    added: "Today",
+    location: "Dealership 9",
+  },
+  {
+    id: "15",
+    name: "Lamborghini Huracan",
+    price: 140000,
+    mileage: 12000,
+    added: "Today",
+    location: "Dealership 10",
+  },
+] satisfies CarListItemProps["vehicle"][];

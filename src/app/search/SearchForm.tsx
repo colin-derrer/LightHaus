@@ -28,8 +28,8 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { Slider } from "@/components/ui/slider";
 import { DoubleSlider } from "@/components/ui/double-slider";
+import FormLabelBar from "./FormLabelBar";
 
 type FormIdToggle = Readonly<{
   id: string;
@@ -51,6 +51,40 @@ function getAllCheckedValues<T extends FormIdToggle>(
   if (!allValues) return [];
   return allValues.filter((value) => isChecked(value.id, checkedValues));
 }
+
+const colors = [
+  {
+    id: "red",
+    label: "Red",
+  },
+  {
+    id: "blue",
+    label: "Blue",
+  },
+  {
+    id: "green",
+    label: "Green",
+  },
+  {
+    id: "yellow",
+    label: "Yellow",
+  },
+];
+
+const driveTypes = [
+  {
+    id: "fwd",
+    label: "FWD",
+  },
+  {
+    id: "rwd",
+    label: "RWD",
+  },
+  {
+    id: "awd",
+    label: "AWD",
+  },
+] as const;
 
 const vehicles = [
   {
@@ -124,9 +158,14 @@ const FormSchema = z.object({
       maximum: z.number(),
     })
     .optional(),
-  condition: z.enum(["new", "used"]).optional(),
+  condition: z
+    .object({
+      new: z.boolean().optional(),
+      used: z.boolean().optional(),
+    })
+    .optional(),
   dealershipLocations: z.enum(dealershipEnum).array().optional(),
-  drive: z.enum(["FWD", "RWD", "AWD"]).array().optional(),
+  drive: z.enum(["fwd", "rwd", "awd"]).array().optional(),
   colors: z.string().array().optional(),
 });
 
@@ -137,6 +176,9 @@ export default function SearchForm() {
       dealershipLocations: [],
       carTypes: [],
       mileage: { minimum: 0, maximum: 50000 },
+      priceRange: { minimum: 10000, maximum: 70000 },
+      drive: [],
+      condition: {},
     },
   });
   return (
@@ -149,9 +191,10 @@ export default function SearchForm() {
           control={form.control}
           name="carTypes"
           render={({ field }) => (
-            <FormItem className="flex flex-col col-span-full">
-              <FormLabel className="text-sm text-muted-foreground font-semibold">
-                Vehicle Models
+            <FormItem className="flex flex-col col-span-2">
+              <FormLabel className="text-sm text-muted-foreground font-semibold flex gap-2 items-center">
+                Vehicles
+                <FormLabelBar />
               </FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -216,11 +259,81 @@ export default function SearchForm() {
         />
         <FormField
           control={form.control}
+          name="condition"
+          render={() => (
+            <FormItem className="col-span-2">
+              <FormLabel className="text-sm text-muted-foreground font-semibold flex gap-2 items-center">
+                Condition
+                <FormLabelBar />
+              </FormLabel>
+              <FormField
+                key={"new"}
+                control={form.control}
+                name="condition"
+                render={({ field }) => {
+                  return (
+                    <FormItem
+                      key={"new"}
+                      className="flex flex-row items-start space-x-3 space-y-0"
+                    >
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value?.new}
+                          onCheckedChange={(checked) => {
+                            return checked
+                              ? field.onChange({ ...field.value, new: true })
+                              : field.onChange({
+                                  ...field.value,
+                                  new: undefined,
+                                });
+                          }}
+                        />
+                      </FormControl>
+                      <FormLabel className="font-normal">New</FormLabel>
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                key={"used"}
+                control={form.control}
+                name="condition"
+                render={({ field }) => {
+                  return (
+                    <FormItem
+                      key={"used"}
+                      className="flex flex-row items-start space-x-3 space-y-0"
+                    >
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value?.used}
+                          onCheckedChange={(checked) => {
+                            return checked
+                              ? field.onChange({ ...field.value, used: true })
+                              : field.onChange({
+                                  ...field.value,
+                                  used: undefined,
+                                });
+                          }}
+                        />
+                      </FormControl>
+                      <FormLabel className="font-normal">Used</FormLabel>
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="dealershipLocations"
           render={() => (
             <FormItem className="col-span-2">
-              <FormLabel className="text-sm text-muted-foreground font-semibold">
+              <FormLabel className="text-sm text-muted-foreground font-semibold flex gap-2 items-center">
                 Locations
+                <FormLabelBar />
               </FormLabel>
               {dealerships.map((dealership) => (
                 <FormField
@@ -264,11 +377,59 @@ export default function SearchForm() {
         />
         <FormField
           control={form.control}
+          name="drive"
+          render={() => (
+            <FormItem className="col-span-2">
+              <FormLabel className="text-sm text-muted-foreground font-semibold flex gap-2 items-center">
+                Drive
+                <FormLabelBar />
+              </FormLabel>
+              {driveTypes.map((drive) => (
+                <FormField
+                  key={drive.id}
+                  control={form.control}
+                  name="drive"
+                  render={({ field }) => {
+                    return (
+                      <FormItem
+                        key={drive.id}
+                        className="flex flex-row items-start space-x-3 space-y-0"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(drive.id)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value!, drive.id])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value) => value !== drive.id
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          {drive.label}
+                        </FormLabel>
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="mileage"
           render={({ field }) => (
-            <FormItem className="col-span-full flex flex-col gap-2">
-              <FormLabel className="text-sm text-muted-foreground font-semibold">
+            <FormItem className="col-span-full flex flex-col gap-1 pt-4">
+              <FormLabel className="text-sm text-muted-foreground font-semibold flex gap-2 items-center">
                 Mileage
+                <FormLabelBar />
               </FormLabel>
               <div className="flex justify-between text-xs text-muted-foreground">
                 <p>Minimum: 0</p>
@@ -291,14 +452,53 @@ export default function SearchForm() {
                   max={50000}
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="col-span-1">
-          Submit
-        </Button>
+        <FormField
+          control={form.control}
+          name="priceRange"
+          render={({ field }) => (
+            <FormItem className="col-span-full flex flex-col gap-1 pt-4">
+              <FormLabel className="text-sm text-muted-foreground font-semibold flex gap-2 items-center">
+                Price
+                <FormLabelBar />
+              </FormLabel>
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <p>Minimum: 10,000</p>
+                <p>Maximum: 70,000</p>
+              </div>
+              <FormControl>
+                <DoubleSlider
+                  onValueChange={(e) => {
+                    form.setValue("priceRange", {
+                      minimum: e[0],
+                      maximum: e[1],
+                    });
+                  }}
+                  step={1000}
+                  defaultValue={[10000, 70000]}
+                  value={[
+                    field.value?.minimum || 10000,
+                    field.value?.maximum || 70000,
+                  ]}
+                  min={10000}
+                  max={70000}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="col-span-full mt-4 flex justify-between">
+          <Button variant={"outline"} className="">
+            Reset filters
+          </Button>
+          <Button type="submit" className="">
+            Submit
+          </Button>
+        </div>
       </form>
     </Form>
   );

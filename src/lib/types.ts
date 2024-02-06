@@ -1,8 +1,9 @@
 export type ClientData = {
   id: string;
   name: string;
+  autogenDescription: string;
   addedSource: "dealer" | "api" | "manager" | "other";
-  addedCause: "leaseExpiring" | "newCar" | "usedCar" | "manual" | "other";
+  addedCause: ("leaseExpiring" | "newCar" | "usedCar" | "manual" | "other")[];
   events: ClientEventData[];
 
   email?: string;

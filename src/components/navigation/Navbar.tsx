@@ -1,9 +1,15 @@
 import { cn } from "@/lib/utils";
 import NavElement from "./NavElement";
-import { LayoutDashboard, RadioTower, Search, Wallet } from "lucide-react";
+import {
+  FlaskConical,
+  LayoutDashboard,
+  RadioTower,
+  Search,
+  Wallet,
+} from "lucide-react";
 import { Separator } from "../ui/separator";
-import PageMargin from "./BreakpointMargin";
-import UserSwap from "../UserSwap";
+import PageMargin from "../layout/BreakpointMargin";
+import UserSwap from "./UserNavbar";
 
 export default function Navbar({
   className,
@@ -35,6 +41,10 @@ export default function Navbar({
           <NavElement href="search">
             <Search />
             Search
+          </NavElement>
+          <NavElement href="experimental">
+            <FlaskConical />
+            Experimental
           </NavElement>
         </div>
         <UserSwap />

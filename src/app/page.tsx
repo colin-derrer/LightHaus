@@ -28,12 +28,12 @@ export default function Home() {
           <div className="">Frogamus’s Dashboard</div>
         </TextDivider>
         <div className="flex flex-col">
-          <p className="text-muted-foreground text-xl font-semibold">
+          <p className="text-muted-foreground text-xl font-medium">
             January 26th
           </p>
-          <p className="text-5xl font-semibold">10:21 AM</p>
+          <p className="text-5xl font-medium">10:21 AM</p>
         </div>
-        <div className="grid grid-cols-2 gap-2 text-center text-lg font-semibold">
+        <div className="grid grid-cols-2 gap-2 text-center text-lg font-medium">
           <Card className="h-32 col-span-2 bg-gray-300 p-8 flex justify-between items-center text-primary-foreground">
             <p>36% | $84,600</p>
             <p>Monthly sales target $235,000</p>
@@ -53,50 +53,50 @@ export default function Home() {
       <Card className="border-none bg-transparent col-span-4 grid grid-cols-4 grid-rows-4 gap-4 aspect-square">
         <GridTile className="bg-tempBlue text-tempBlue-foreground">
           <SatelliteDish className="size-10" />
-          <div className="flex flex-col text-center pt-4 font-semibold">
+          <div className="flex flex-col text-center pt-4 font-medium">
             <p className="">4 New</p>
             <p className="">Outreach</p>
           </div>
         </GridTile>
-        <GridTile>
+        <GridTile className="bg-muted text-muted-foreground">
           <PackageOpen className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">4</p>
-            <p className="font-semibold whitespace-nowrap">Package Updates</p>
+            <p className="font-medium">4</p>
+            <p className="font-medium">Package Updates</p>
           </div>
         </GridTile>
         <GridTile className="bg-primary text-primary-foreground">
           <Car className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">Recent Vehicle</p>
-            <p className="font-semibold">4 Arrivals</p>
+            <p className="font-medium">Recent Vehicle</p>
+            <p className="font-medium">4 Arrivals</p>
           </div>
         </GridTile>
         <GridTile className="">
           <Wallet className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">1</p>
-            <p className="font-semibold">Open Deal</p>
+            <p className="font-medium">1</p>
+            <p className="font-medium">Open Deal</p>
           </div>
         </GridTile>
         <div className="col-span-1 bg-transparent" />
         <GridTile className="bg-primary text-primary-foreground">
           <Wallet className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">1</p>
-            <p className="font-semibold">Open Deal</p>
+            <p className="font-medium">1</p>
+            <p className="font-medium">Open Deal</p>
           </div>
         </GridTile>
         <div className="col-span-1 bg-transparent" />
         <GridTile className="bg-primary text-primary-foreground">
           <CalendarPlus className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">View Showroom Visit Log</p>
+            <p className="font-medium">View Showroom Visit Log</p>
           </div>
         </GridTile>
         <GridTile className=" col-span-3 row-span-2 aspect-auto flex flex-col p-2 gap-4">
           <p className="mt-4">New Vehicles This Week</p>
-          <ScrollArea className="h-full w-full whitespace-nowrap ">
+          <ScrollArea className="h-full w-full ">
             <div className="flex grow  h-full w-max gap-2">
               <Card className="h-52 min-w-48">hi</Card>
               <Card className="h-52 min-w-48">hi</Card>
@@ -106,17 +106,17 @@ export default function Home() {
           </ScrollArea>
         </GridTile>
 
-        <GridTile className="bg-stone-300 text-primary-foreground">
+        <GridTile className="bg-muted text-muted-foreground">
           <CalendarPlus className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">View Showroom Visit Log</p>
+            <p className="font-medium">View Showroom Visit Log</p>
           </div>
         </GridTile>
 
         <GridTile className="bg-primary text-primary-foreground">
           <CalendarPlus className="size-10" />
           <div className="flex flex-col text-center pt-4">
-            <p className="font-semibold">View Showroom Visit Log</p>
+            <p className="font-medium">View Showroom Visit Log</p>
           </div>
         </GridTile>
       </Card>
@@ -125,7 +125,7 @@ export default function Home() {
           <TextDivider className="grow">
             <div className="">Memo</div>
           </TextDivider>
-          <div className="text-muted-foreground underline font-semibold">
+          <div className="text-muted-foreground underline font-medium">
             Modify an entry
           </div>
         </CardHeader>

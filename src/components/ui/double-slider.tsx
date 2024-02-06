@@ -47,7 +47,7 @@ export const DoubleSlider = React.forwardRef<
     <SliderPrimitive.Root
       ref={ref}
       className={cn(
-        "relative flex w-full touch-none select-none items-center pb-4",
+        "relative flex w-full touch-none select-none items-center pb-2",
         className
       )}
       onValueChange={(value) => {

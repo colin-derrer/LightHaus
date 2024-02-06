@@ -1,4 +1,4 @@
-import { ClientData } from "@/types";
+import { ClientData } from "@/lib/types";
 
 export function formatAddedSource(addedSource: ClientData["addedSource"]) {
   switch (addedSource) {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/layout/Navbar";
+import Navbar from "../components/navigation/Navbar";
 import { Providers } from "@/components/providers/ThemeProvider";
 import DevTools from "@/components/dev/Devtools";
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.className} min-h-[960px] font-sans antialiased flex flex-col bg-background gap-2`}
+        className={`${poppins.className} min-h-[960px] antialiased flex flex-col bg-background gap-2`}
       >
         <Providers
           attribute="class"
