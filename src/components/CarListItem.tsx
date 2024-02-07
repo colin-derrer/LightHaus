@@ -1,5 +1,5 @@
 import { Gauge, MapPin, Calendar } from "lucide-react";
-import ListItem from "./lists/ListItem";
+import ListItem from "./ListItem";
 import { cn } from "@/lib/utils";
 
 export type CarListItemProps = {

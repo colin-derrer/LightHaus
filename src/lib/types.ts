@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export type ClientData = {
   id: string;
   name: string;
@@ -8,7 +10,7 @@ export type ClientData = {
 
   email?: string;
   phone?: string;
-  estimatedSalary?: number;
+  estimatedSalary?: number; // deprecate
   age?: number;
   familyMembers?: number;
   address?: string;

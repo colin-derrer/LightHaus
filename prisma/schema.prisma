@@ -12,7 +12,88 @@ datasource db {
 
 model User {
   id        String @id @default(uuid())
-  email     String   @unique
+  displayName String
+  email     String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  clients   Client[]
+  notes     ClientNotes[]
+}
+
+model Client {
+  id        String @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  assignedUser User? @relation(fields: [assignedUserId], references: [id])
+  assignedUserId String?
+  assignedDate DateTime?
+  emails String[]
+  phoneNumbers String[]
+  estimatedAge Int
+  familyMembers Int
+  addresses String[]
+  autogenDescription String
+  events   ClientEvent[]
+  addedNotes ClientNotes[]
+  leadSources LeadSource[]
+  leadReasons LeadReason[]
+  phase ClientPhase
+}
+
+model ClientEvent {
+  id        String @id @default(uuid())
+  client    Client @relation(fields: [clientId], references: [id])
+  clientId String 
+  message   String
+  eventDate DateTime
+  type ClientEventType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ClientNotes {
+  id        String @id @default(uuid())
+  client    Client @relation(fields: [clientId], references: [id])
+  clientId String 
+  addedBy  User @relation(fields: [addedById], references: [id])
+  addedById String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ClientPhase {
+  ACTIVE_PROPOSAL
+  ACTIVE_DEAL
+  LEAD
+  FOLLOW_UP
+  COOLDOWN
+  DO_NOT_CONTACT
+}
+
+enum ClientEventType {
+  WALK_IN
+  PHONE_CALL
+  EMAIL
+  MEETING
+  OTHER
+}
+
+enum LeadSource {
+  MANUAL_SELF
+  MANUAL_MANAGER
+  WALK_IN
+  WEBSITE
+  AUTOLEAD
+  UNKNOWN
+}
+
+enum LeadReason {
+  LAST_GEN_VEHICLE
+  FOLLOW_UP
+  LEASE_EXPIRING_SOON
+  HIGH_MILEAGE_VEHICLE
+  INQUIRY
+  UNKNOWN
 }

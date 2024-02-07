@@ -1,4 +1,4 @@
-import ProfileItem from "@/components/ClientListItem";
+import ProfileItem from "@/components/client/ClientListItem";
 import TextDivider from "@/components/DividerBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,91 +25,59 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import PageShell from "@/components/layout/PageShell";
+import { getClients } from "@/actions/clients/clients";
 
-export default function ActiveDealsPage() {
+export default async function ActiveDealsPage() {
+  const activeProposalClients = await getClients({ phase: "ACTIVE_PROPOSAL" });
+  const activeDealClients = await getClients({ phase: "ACTIVE_DEAL" });
+
   return (
     <PageShell className="flex">
       <div className="w-[550px] max-h-full border-r p-4 flex flex-col gap-4">
         <div className="flex gap-2 items-center">
           <TextDivider>
             <span>Active Proposals</span>
-            <span className="text-muted-foreground">{clientList.length}</span>
+            <span className="text-muted-foreground">
+              {activeProposalClients.length || 0}
+            </span>
           </TextDivider>
           <Button className="ml-auto h-8">+ Add client</Button>
         </div>
         <Separator />
         <ScrollArea>
           <div className="pr-4 flex flex-col gap-1 max-h-[300px]">
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} isActive />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
+            {activeProposalClients.map((client) => (
+              <div key={client.id}>
+                <ProfileItem
+                  client={client}
+                  href={`/active-deals/${client.id}`}
+                />
+                <Separator />
+              </div>
+            ))}
           </div>
           <ScrollBar />
         </ScrollArea>
         <div className="flex gap-2 items-center pt-16">
           <TextDivider>
             <span>Active Deals</span>
-            <span className="text-muted-foreground">{clientList.length}</span>
+            <span className="text-muted-foreground">
+              {activeDealClients.length || 0}
+            </span>
           </TextDivider>
           <Button className="ml-auto h-8">+ Add client</Button>
         </div>
         <ScrollArea>
           <div className="pr-4 flex flex-col gap-1 max-h-[300px]">
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} isActive />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
-            <Separator />
-            <ProfileItem client={clientList[0]} />
-            <Separator />
-            <ProfileItem client={clientList[1]} />
+            {activeDealClients.map((client) => (
+              <div key={client.id}>
+                <ProfileItem
+                  client={client}
+                  href={`/active-deals/${client.id}`}
+                />
+                <Separator />
+              </div>
+            ))}
           </div>
           <ScrollBar />
         </ScrollArea>

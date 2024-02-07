@@ -12,7 +12,7 @@ import {
   MapPinned,
   Menu,
 } from "lucide-react";
-import ListItem from "@/components/lists/ListItem";
+import ListItem from "@/components/ListItem";
 import { Card } from "@/components/ui/card";
 import {
   Collapsible,

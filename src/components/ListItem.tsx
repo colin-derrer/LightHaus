@@ -1,15 +1,17 @@
 import { cn } from "@/lib/utils";
+import React from "react";
 
 type ListItemProps = {
   className?: string;
   active?: boolean;
   children?: React.ReactNode;
-};
+} & React.HTMLAttributes<HTMLLIElement>;
 
 export default function ListItem({
   className,
   active,
   children,
+  ...props
 }: ListItemProps) {
   return (
     <li
@@ -20,6 +22,7 @@ export default function ListItem({
           : "text-foreground",
         className
       )}
+      {...props}
     >
       {children}
     </li>

@@ -439,8 +439,8 @@ export default function SearchForm() {
                 <DoubleSlider
                   onValueChange={(e) => {
                     form.setValue("mileage", {
-                      minimum: e[0],
-                      maximum: e[1],
+                      minimum: e[0] as number,
+                      maximum: e[1] as number,
                     });
                   }}
                   step={1000}
@@ -473,8 +473,8 @@ export default function SearchForm() {
                 <DoubleSlider
                   onValueChange={(e) => {
                     form.setValue("priceRange", {
-                      minimum: e[0],
-                      maximum: e[1],
+                      minimum: e[0] as number,
+                      maximum: e[1] as number,
                     });
                   }}
                   step={1000}

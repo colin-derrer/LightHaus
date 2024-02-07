@@ -13,10 +13,13 @@ import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { cn } from "@/lib/utils";
+import { Client, ClientEvent } from "@prisma/client";
 
 type ProfileSidecardProps = {
   className?: string;
-  client: ClientData;
+  client: Client & {
+    events: ClientEvent[];
+  };
 };
 
 export default function ProfileSidecard({
@@ -26,7 +29,7 @@ export default function ProfileSidecard({
   return (
     <Card
       className={cn(
-        "p-4 w-[450px] flex flex-col gap-2 m-2 relative bg-transparent",
+        "p-4 w-[450px] flex flex-col gap-2 m-2 relative bg-transparent self-start",
         className
       )}
     >
@@ -42,7 +45,7 @@ export default function ProfileSidecard({
         <div className="col-span-1 ">
           <p className="text-xs text-muted-foreground font-medium">Age</p>
           <TreesIcon className="size-5 inline" />
-          <span className="ml-1 text-sm">{client.age || "-"}</span>
+          <span className="ml-1 text-sm">{client.estimatedAge || "-"}</span>
         </div>
         <div className="col-span-1">
           <p className="text-xs text-muted-foreground font-medium">
@@ -56,45 +59,51 @@ export default function ProfileSidecard({
             Primary Phone Number
           </p>
           <Phone className="size-5 inline" />
-          <span className="ml-1 text-sm">{client.phone || "-"}</span>
+          <span className="ml-1 text-sm">{client.phoneNumbers[0] || "-"}</span>
         </div>
         <div className="col-span-1">
           <p className="text-xs text-muted-foreground font-medium">
             Estimated Salary
           </p>
           <CircleDollarSign className="size-5 inline" />
-          <span className="ml-1 text-sm">{client.estimatedSalary || "-"}</span>
+          <span className="ml-1 text-sm">{"Deprecated field"}</span>
         </div>
         <div className="col-span-2">
           <p className="text-xs text-muted-foreground font-medium">
             Email Address
           </p>
           <AtSign className="size-5 inline" />
-          <span className="ml-1 text-sm">{client.email || "-"}</span>
+          <span className="ml-1 text-sm">{client.emails[0] || "-"}</span>
         </div>
         <div className="col-span-2">
           <p className="text-xs text-muted-foreground font-medium">
             Home Address
           </p>
           <Mailbox className="size-5 inline" />
-          <span className="ml-1 text-sm">{client.address || "-"}</span>
+          <span className="ml-1 text-sm">{client.addresses[0] || "-"}</span>
         </div>
       </div>
-      <Separator />
-      <div className="text-sm flex gap-2 items-center">
-        {client.events.map((event) => {
-          return (
-            <div
-              key={event.message + event.date}
-              className="text-sm flex gap-2 items-center"
-            >
-              <PhoneMissed className="size-5 text-muted-foreground" />
-              <p className="text-muted-foreground">{event.date}</p>
-              <p className="">{event.message}</p>
-            </div>
-          );
-        })}
-      </div>
+      {client.events.length > 0 && (
+        <>
+          <Separator />
+          <div className="text-sm flex gap-2 items-center">
+            {client.events.map((event) => {
+              return (
+                <div
+                  key={event.message + event.eventDate}
+                  className="text-sm flex gap-2 items-center"
+                >
+                  <PhoneMissed className="size-5 text-muted-foreground" />
+                  <p className="text-muted-foreground">
+                    {event.eventDate.getUTCDate()}
+                  </p>
+                  <p className="">{event.message}</p>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </Card>
   );
 }

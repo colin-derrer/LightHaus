@@ -42,10 +42,6 @@ export default function Navbar({
             <Search />
             Search
           </NavElement>
-          <NavElement href="experimental">
-            <FlaskConical />
-            Experimental
-          </NavElement>
         </div>
         <UserSwap />
       </PageMargin>
