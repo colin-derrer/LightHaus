@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.className} min-h-[960px] antialiased flex flex-col bg-background gap-2`}
+        className={`${poppins.className} min-h-[90vh] antialiased flex flex-col bg-background gap-2`}
       >
         <Providers
           attribute="class"

@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <PageShell className="flex flex-col items-center">
       <p>404 - Not Found</p>
-      <Link href="/">Return to normalcy.</Link>
+      <Link href="/">Return to home.</Link>
     </PageShell>
   );
 }
